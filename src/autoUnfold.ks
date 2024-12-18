@@ -12,4 +12,3 @@ for moduleAntenna in ship:modulesnamed("ModuleDeployableAntenna") {
     }
 }
 deletePath("1:/autoUnfold").
-copyPath("0:/scripts/executePrcpMan", "1:/executePrcpMan").
