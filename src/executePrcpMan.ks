@@ -1,4 +1,5 @@
 // Execute the next and only Principia manoeuvre node
+declare parameter stageUllageMotors to false.
 if hasnode {
     print("Executing next Principia manoeuvre node.").
     // Align to the next node
@@ -7,7 +8,13 @@ if hasnode {
 
     // Ullage
     wait until nextNode:eta < 10.
-    set ship:control:fore to 1.
+    if stageUllageMotors {
+        print("Staging ullage motors.").
+        stage.
+    } else {
+        print("Ullaging with RCS.").
+        set ship:control:fore to 1.
+    }
 
     // Burn
     wait until nextNode:eta < 0.1.
@@ -37,7 +44,7 @@ local function excuteBurn {
 }
 
 local function keepManoeuvreHeading {
-    parameter burnVector.
+    declare parameter burnVector.
     if hasNode {
     set burnVector to nextNode:burnvector.
     }
@@ -45,7 +52,7 @@ local function keepManoeuvreHeading {
 }
 
 local function getDeltaVSinceMass {
-    parameter initialMass.
+    declare parameter initialMass.
     declare local ispMetersPerSecond to getVesselIspMetersPerSecond().
 
     declare local currentDeltaV to ispMetersPerSecond * ln(initialMass / ship:mass).
