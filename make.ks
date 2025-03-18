@@ -30,16 +30,20 @@ if exists(sourceDirectory) {
 // Compile all files in the list.
     declare numberOfCompiledFiles to 0.
     for file in files {
-        declare local compiledFile to path(targetDirectory):combine(file + "m").
-        compile file to compiledFile.
+        if open(file):isfile {
+            declare local compiledFile to path(targetDirectory):combine(file + "m").
+            compile file to compiledFile.
 
-        if open(file):size <= open(compiledFile):size {
-            deletepath(compiledFile).
-            print(" - File " + file + " is smaller than compiled file " + file + "m" + ".").
-            print("   Deleted compiled file.").
+            if open(file):size <= open(compiledFile):size {
+                deletepath(compiledFile).
+                print(" - File " + file + " is smaller than compiled file " + file + "m" + ".").
+                print("   Deleted compiled file.").
+            } else {
+                print(" - Compiled " + file + " to " + compiledFile).
+                set numberOfCompiledFiles to numberOfCompiledFiles + 1.
+            }
         } else {
-            print(" - Compiled " + file + " to " + compiledFile).
-            set numberOfCompiledFiles to numberOfCompiledFiles + 1.
+            runPath("0:/make.ks", path(sourceDirectory):combine(file), path(targetDirectory):combine(file)).
         }
     }
     print(" ").
