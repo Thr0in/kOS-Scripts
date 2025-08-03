@@ -1,9 +1,9 @@
 declare parameter optionsString to core:tag.
 declare local processedOptions to lexicon().
 
-declare local currentPath to path("1:/boot/bootLoadByNameTag").
+declare local currentPath to path("1:/boot"):combine(scriptPath():name).
 if exists(currentPath) {
-    print "Cleaning up boot script...".
+    print "Cleaning up boot script: " + currentPath + " ...".
     deletePath(currentPath).
 }
 
