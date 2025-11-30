@@ -3,6 +3,8 @@ declare parameter stageUllageMotors to false.
 if hasnode {
     print("Executing next Principia manoeuvre node.").
     // Align to the next node
+    wait until nextNode:eta < 5 * 60.
+    set kuniverse:timewarp:rate to 2.
     wait until nextNode:eta < 60.
     initializeBurn().
 
