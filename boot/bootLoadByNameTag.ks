@@ -1,4 +1,4 @@
-declare parameter optionsString to core:tag.
+declare parameter optionsString to CORE:tag.
 declare local processedOptions to lexicon().
 
 declare local currentPath to path("1:/boot"):combine(scriptPath():name).
@@ -47,14 +47,14 @@ local function handleOptions {
         print "Loading " + loadFiles:length + " files...".
         print " ".
         for file in loadFiles {
-            if not loadFile(path("0:/" + file)) {
+            if not loadFile(path("0:/"):combine(file)) {
                 return false.
             }
         }
     }
 
     if options:haskey("run") {
-        return runFile(path("0:/" + options["run"])).
+        return runFile(path("0:/"):combine(options["run"])).
     }
 
     return true.
