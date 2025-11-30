@@ -1,11 +1,11 @@
-// Description: This script compiles all files in a given directory to the "0:/exe" directory.
+// Description: This script compiles all files in a given directory to the "0:/bin" directory.
 // The compiled files are named the same as the source files using the ".ksm" extension.
 // Accepts a single file or a directory as a parameter.
 // If no parameter is given, the default directory is "0:/src".
 // Usage: runpath(make, "0:/src") or runpath(make, "0:/src/helloWorld.ks").
 // Author: Throin
 
-parameter sourceDirectory to "0:/src", targetDirectory to "0:/exe".
+parameter sourceDirectory to "0:/src", targetDirectory to "0:/bin".
 declare local oldDirectory to path().
 
 if exists(sourceDirectory) {
