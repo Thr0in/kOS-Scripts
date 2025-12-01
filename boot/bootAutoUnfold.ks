@@ -1,6 +1,6 @@
 print "Boot script loaded.".
-if exists("0:/exe/autoUnfold") {
-    copyPath("0:/exe/autoUnfold", "1:/autoUnfold").
+if exists("0:/bin/autoUnfold") {
+    copyPath("0:/bin/autoUnfold", "1:/autoUnfold").
 } else {
     copyPath("0:/src/autoUnfold", "1:/autoUnfold").
 }
