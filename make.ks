@@ -22,7 +22,12 @@ if exists(sourceDirectory) {
     } else {
         cd(sourceDirectory).
         print("Changed to " + sourceDirectory).
-        list files in files.
+        list files in f.
+        for file in f {
+            if file:extension = "ks" or not open(file):isfile {
+                files:add(file:name).
+            }
+        }
         print("Found " + files:length + " files").
     }
     print(" ").
@@ -39,7 +44,8 @@ if exists(sourceDirectory) {
                 print(" - File " + file + " is smaller than compiled file " + file + "m" + ".").
                 print("   Deleted compiled file.").
             } else {
-                print(" - Compiled " + file + " to " + compiledFile).
+                print(" - Compiled " + file + " to " + compiledFile + ".").
+                print("   Size: " + open(compiledFile):size + " bytes.").
                 set numberOfCompiledFiles to numberOfCompiledFiles + 1.
             }
         } else {
@@ -48,6 +54,7 @@ if exists(sourceDirectory) {
     }
     print(" ").
     print("Compiled " + numberOfCompiledFiles + " files").
+    print(" ").
 } else {
     print("File or directory not found").
 }
