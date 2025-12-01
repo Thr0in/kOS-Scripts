@@ -1,0 +1,57 @@
+{
+    "type": "rocket",
+    "description": "Launch to Geostationary Orbit",
+    "unguidedStages": [],
+    "lastCompletedStep": null,
+    "steps": [
+        {
+            "action": "launch",
+            "description": "Launch to Low Earth Orbit",
+            "finalStage": 5,
+            "targetOrbit": {
+                "inc": 28.5,
+                "e": 0.0,
+                "sma": 6536750,
+                "argPe": 0.0,
+                "lan": 0.0,
+                "maEp": 0.0,
+                "epoch": 0,
+                "body": "Earth"
+            }
+        },
+        {
+            "action": "transfer",
+            "description": "Transfer to Geostationary Orbit",
+            "finalStage": 2,
+            "targetOrbit": {
+                "inc": 28.0,
+                "e": 0.7307951304702258,
+                "sma": 24361136.599999976,
+                "argPe": 359.82407624966334,
+                "lan": 0.0,
+                "maEp": 0.0,
+                "epoch": 0,
+                "body": "Earth"
+            }
+        },
+        {
+            "action": "circularize",
+            "description": "Circularize at Geostationary Orbit",
+            "finalStage": 0,
+            "limits": {
+                "inc": {
+                    "max": 0.5,
+                    "min": -0.5
+                },
+                "e": {
+                    "max": 0.001,
+                    "min": 0.0
+                },
+                "period": {
+                    "max": 86164.1905,
+                    "min": 86163.9905
+                }
+            }
+        }
+    ]
+}
