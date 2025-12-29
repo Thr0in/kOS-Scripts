@@ -3,27 +3,34 @@
 runOncePath(scriptPath():root:combine("utils")).
 
 
-declare parameter flightPlan.
+declare parameter plan.
 
 main().
 
 local function main {
-    declare local nextStep to flightPlan:getNextStep().
+    print("Starting rocket autopilot...").
 
-    until nextStep:action = "complete". {
+    from {local nextStep to plan:getNextStep().} until nextStep:action = "complete" step {set nextStep to plan:getNextStep().} do {
         print("Next flight plan step: " + nextStep:description + ".").
 
         switchBy(nextStep:action, lexicon(
-            "launch", {print("Launch not yet implemented").},
+            "launch", handleLaunchStep@:bind(nextStep),
             "transfer", handleTransferStep@:bind(nextStep),
             "circularize", {print("Circularize not yet implemented").}
         ), {print("Unknown action").}).
 
-        flightPlan:setLastCompletedStep(flightPlan:getLastCompletedStep() + 1).
-        flightPlan:save().
+        plan:setLastCompletedStep(plan:getLastCompletedStep() + 1).
+        plan:save().
         wait 5.
-        set nextStep to flightPlan:getNextStep().
+        set nextStep to plan:getNextStep().
     }
+    print(plan:getNextStep():description).
+    print("Flight plan complete. Rocket autopilot shutting down.").
+}
+
+local function handleLaunchStep {
+    declare parameter step.
+    print("Launch not yet implemented").
 }
 
 // Handle a transfer step in the flight plan.

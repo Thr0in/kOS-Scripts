@@ -5,7 +5,7 @@ runOncePath(scriptPath():parent:combine("flightPlan")).
 
 declare parameter flightPlanPath is scriptPath():parent:combine("flightPlan.json").
 
-declare local flightPlan to FlightPlan(flightPlanPath).
+declare local plan to FlightPlan(flightPlanPath).
 main().
 
 
@@ -13,15 +13,15 @@ main().
 // Executes the provided flight plan based on its type.
 // Currently supports only 'rocket' type flight plans.
 local function main {
-    if not flightPlan:isValid() {
+    if not plan:isValid() {
         return.
     }
 
-    print("Loaded flight plan of type: " + flightPlan:getType() + ".").
-    print(flightPlan["description"]).
+    print("Loaded flight plan of type: " + plan:getType() + ".").
+    print(plan:getDescription()).
 
-    if flightPlan:getType() = "rocket" {
-        runPath(path("rocketAutopilot"), flightPlan).
+    if plan:getType() = "rocket" {
+        runPath(scriptPath():parent:combine("rocketAutopilot"), plan).
     }
 
 }
