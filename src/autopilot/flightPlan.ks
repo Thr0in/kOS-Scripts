@@ -6,8 +6,8 @@ global function FlightPlan {
     declare parameter flightPlanFile.
 
     declare local this to lexicon().
-    declare local flightPlanData to choose readJson(path(flightPlanFile)) if flightPlanFile:istype("string") else flightPlanFile.
-    declare local jsonPath to choose jsonPath(flightPlanFile) if flightPlanFile:istype("string") else -1.
+    declare local flightPlanData to addons:json:parse(open(flightPlanFile):readall():string).
+    declare local jsonPath to path(flightPlanFile).
 
 
     // Validates a given flight plan.
@@ -51,7 +51,7 @@ global function FlightPlan {
 
     set this["setLastCompletedStep"] to {
         declare parameter stepIndex.
-        if not this:getLastCompletedStep() <= stepIndex < this:getSteps():length() {
+        if (stepIndex < this:getLastCompletedStep() or this:getSteps():length() <= stepIndex) {
             print("Invalid step index for last completed step.").
             return -1.
         }
@@ -89,7 +89,7 @@ global function FlightPlan {
 
     set this["setPath"] to {
         declare parameter newPath.
-        set jsonPath to jsonPath(newPath).
+        set jsonPath to path(newPath).
     }.
 
 
@@ -100,28 +100,17 @@ global function FlightPlan {
             print("Cannot save flight plan: no valid path specified.").
             return -1.
         }
-        writeJson(flightPlanData, jsonPath).
-        declare local file to jsonPath:volume:open(jsonPath).
-        if file = false {
-            print("Failed to save flight plan to " + jsonPath + ".").
+        declare local fileContent to addons:json:stringify(flightPlanData).
+        declare local file to open(jsonPath).
+
+        if ((file:istype("boolean") and not file) or jsonPath:volume:freespace + file:size() < fileContent:length()) {
+            print("Insufficient space to save flight plan.").
             return -1.
         }
 
-        // Verify the write by checking file size change
-        // False negatives can occur when available disk space is lower than file size increase.
-        declare local fileSize to file:size.
-        set flightPlanData["verifier"] to 0.
-        writeJson(flightPlanData, jsonPath).
-        set file to jsonPath:volume:open(jsonPath).
-
-        if file:size <> fileSize {
-            writeJson(flightPlanData, jsonPath).
-            print("Flight plan saved to " + jsonPath + ".").
-            return 0.
-        } else {
-            print("Failed to verify flight plan save to " + jsonPath + ".").
-            return -1.
-        }
+        file:clear().
+        file:write(fileContent).
+        return 0.
     }.
 
 

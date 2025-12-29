@@ -3,7 +3,7 @@
 declare local outputPath to scriptPath():parent:combine("exampleFlightPlan.json").
 declare local flightPlanData to lexicon().
 createJson().
-copyPath(outputPath, path("0:/exampleFlightPlan.json")).
+//copyPath(outputPath, path("0:/exampleFlightPlan.json")).
 
 global function createJson {
     // Create a sample flight plan JSON structure.
@@ -61,6 +61,6 @@ global function createJson {
     ).
 
     // Write the flight plan to a JSON file.
-    writeJson(flightPlanData, outputPath).
+    open(outputPath):write(addons:json:stringify(flightPlanData)).
     print("Sample flight plan JSON created at: " + outputPath + ".").
 }

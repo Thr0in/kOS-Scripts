@@ -2,7 +2,7 @@
     "type": "rocket",
     "description": "Launch to Geostationary Orbit",
     "unguidedStages": [],
-    "lastCompletedStep": null,
+    "lastCompletedStep": -1,
     "steps": [
         {
             "action": "launch",
