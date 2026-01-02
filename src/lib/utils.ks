@@ -1,4 +1,4 @@
-// src/utils.ks
+// src/lib/utils.ks
 // Utility functions for general use.
 
 // A switchBy function that mimics switch-case behavior.

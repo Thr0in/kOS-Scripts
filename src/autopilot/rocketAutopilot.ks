@@ -1,6 +1,6 @@
 @LAZYGLOBAL OFF.
 
-runOncePath(scriptPath():root:combine("utils")).
+runOncePath(scriptPath():root:combine("lib/utils")).
 
 
 declare parameter plan.

@@ -1,4 +1,4 @@
-copyPath("0:/src/utils", "1:/utils").
+copyPath("0:/src/lib/utils", "1:/lib/utils").
 copyPath("0:/src/autopilot", "1:/autopilot").
 
 
